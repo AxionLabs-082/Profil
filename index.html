@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: linear-gradient(160deg, #6B4EFF, #8B6CFF);
+  font-family: 'Orbitron', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  width: 90%;
+  max-width: 380px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  padding: 25px;
+  border-radius: 20px;
+  color: #fff; /* Ubah dari #1B1B2F ke putih */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.label, .sub {
+  color: #EDEAFF; /* Supaya label dan sub juga putih */
+}
+
+
+.container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.profile-pic {
+  width:100px;
+  height: 100px;
+  background: #000;
+  border-radius: 50%;
+  margin: 0 auto 25px;
+  overflow: hidden;
+  border: 4px solid #3A2A7A;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+}
+
+.profile-pic.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.text {
+  font-size: 16px; /* sebelumnya 20px */
+  line-height: 1.6; /* biar jarak antar baris lebih pas */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1s ease 0.6s, transform 1s ease 0.6s;
+}
+
+.text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.label {
+  font-weight: bold;
+  font-size: 16px; /* sesuaikan dengan .text */
+}
+
+.sub {
+  margin-left: 18px;
+  font-size: 15px; /* sedikit lebih kecil dari label */
+}
+
+/* Overlay fullscreen */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+#overlay img {
+  width: 90%;
+  max-width: 360px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(157,123,255,0.6);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.profile-pic { cursor: pointer; }
+
+.exit-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #1B1B2F;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.5);
+  transition: all 0.25s ease;
+}
+
+.exit-btn:hover {
+  background: #1B1B2F;
+  color: #9D7BFF;
+  transform: scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<!-- Overlay Preview -->
+<div id="overlay" onclick="closePreview()">
+  <img id="previewImage" src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/image/profil_reze.jpg" onclick="event.stopPropagation()">
+</div>
+
+<div class="container" id="container">
+  <a href="https://axionlabs-082.github.io/Home/" class="exit-btn" id="exitBtn">✕</a>
+  
+  <audio id="clickSound" src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/audio/klik3.mp3" preload="auto"></audio>
+
+  <!-- Foto Profil -->
+  <div class="profile-pic" id="profilePic" onclick="openPreview()">
+    <img src="https://raw.githubusercontent.com/AxionLabs-082/my-Labs/main/image/profil_reze.jpg" alt="Profile">
+  </div>
+
+  <!-- Teks -->
+  <div class="text" id="textContent">
+    <div><span class="label">Name: <u>Reze</u></span></div>
+    <div><span class="label">Age: <u>18</u></span></div>
+    <div><span class="label">Origin: <u>CSM</u></span></div>
+    <br>
+    <div class="label">Appearance:</div>
+    <div class="sub">● <u>Hair</u>: <i>Messy bun</i></div>
+    <div class="sub">● <u>Eyes</u>: <i>Green</i></div>
+    <div class="label">Personality: <br><u>Mysterious</u>, <u>Cool</u>, <u>and</u> <u>Manipulative</u></div>
+  </div>
+</div>
+
+<script>
+function openPreview() {
+  document.getElementById("overlay").style.display = "flex";
+}
+
+function closePreview() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+// Aktifkan fade-in saat halaman dimuat
+window.addEventListener('load', () => {
+  document.getElementById('container').classList.add('visible');
+  document.getElementById('profilePic').classList.add('visible');
+  document.getElementById('textContent').classList.add('visible');
+});
+</script>
+
+<script>
+const exitBtn = document.getElementById("exitBtn");
+const clickSound = document.getElementById("clickSound");
+
+exitBtn.addEventListener("click", function(e) {
+  e.preventDefault(); // tahan pindah halaman sebentar
+
+  clickSound.currentTime = 0;
+  clickSound.play();
+
+  setTimeout(() => {
+    window.location.href = this.href;
+  }, 200); // delay biar sound kedengeran
+});
+</script>
+
+</body>
+</html>
